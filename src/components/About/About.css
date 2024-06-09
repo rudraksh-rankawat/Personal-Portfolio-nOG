@@ -1,0 +1,41 @@
+.about-page {
+    padding: 20px;
+    background-color: #02001e;
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+.about {
+    position: relative;
+    color: white;
+}
+
+.about strong::after {
+    content: '';
+    position: absolute;
+    left: 70px;
+    bottom: 9px;
+    /* bottom: 0px; Adjust this value to move the underline up or down */
+    width: 40%;
+    height: 2px; /* Adjust this value to change the thickness of the underline */
+    background-color: white; /* Adjust this value to change the color of the underline */
+}
+
+.about-content {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 25px;
+}
+
+.about-content img {
+    width: 200px;
+    border-radius: 1%;
+}
+
+.about-text {
+    font-family: 'Jaro', sans-serif;
+    font-weight: 400;
+    color: white;
+    margin-left: 50px;
+    margin-right: 50px;
+}

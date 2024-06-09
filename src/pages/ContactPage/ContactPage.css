@@ -1,0 +1,125 @@
+.contact-page {
+    background-color: #02001e;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    height: 100vh;
+    width: 100vw;
+}
+
+.contact-details {
+    padding: 50px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: space-between;
+    height: 50%;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    margin: 50px;
+    padding: 50px;
+    background-color: white;
+    border-radius: 30px;
+    height: 70%;
+    width: 500px;
+}
+
+.contact-form > form {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+.contact-form > h2{
+    font-size: 2rem;
+    color: #02001e;
+    margin-bottom: 20px;
+}
+
+.contact-form > form > * {
+    margin: 5px;
+    height: 50px;
+    border-radius: 10px;
+    padding: 10px;
+    border: solid 1px #21886972;
+    font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    transition: box-shadow 0.25s ease;
+}
+
+.contact-form > form > *:hover,
+.contact-form > form > *:focus,
+.contact-form > form > *:active {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.273);
+    outline: none;
+    transition: box-shadow 0.5s ease;
+}
+.contact-form > form > button {
+    border: none;
+    background-color: #119a71;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+}
+.contact-form > form > button:hover {
+    background-color: #15cd96;
+    transition: background-color 0.5s ease;
+}
+.contact-form > form > textarea {
+    color: gray;
+    height: 200px;
+}
+.contact-details > h1 {
+    flex: 4;
+}
+
+.contact-information {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+}
+.contact-infomation .email {
+    margin: 20px 20px 20px 0; /* Top, right, bottom, left */
+}
+
+
+.contact-information .email > * {
+    margin-right: 10px;
+}
+.contact-information .email > a{
+    text-decoration: none;
+    color: white;
+    transition: color 0.3s ease-in-out;
+}
+.contact-information .email > a:hover {
+    color: #64ffda;
+    text-decoration: underline;
+    transition: color 0.5s ease-in-out;
+}
+
+
+
+.contact-information .location {
+    margin: 20px 20px 20px 0; /* Top, right, bottom, left */
+}
+
+.contact-information .location > * {
+    margin-right: 10px;
+}
+
+
+
+.socials {
+    flex: 4;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 50px;
+    width: 40%;
+    cursor: pointer;
+}

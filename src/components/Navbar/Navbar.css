@@ -1,0 +1,65 @@
+@font-face {
+    font-family: 'Jaro';
+    src: url('https://fonts.googleapis.com/css2?family=Jaro:opsz@6..72&display=swap') format('truetype');
+}
+
+.navbar {
+    display: flex;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    background-color: #080333;
+    backdrop-filter: blur(10px); /* Blur the area behind the navbar */
+}
+
+#nav-heading{
+    padding: 10px;
+    margin: 10px;
+    margin-left: 40px;
+    font-family: 'Jaro', sans-serif;
+    font-weight: bold;
+    color: rgb(217, 217, 217);
+}
+
+.nav-links{
+    padding: 10px;
+    margin: 10px;
+    width: 20%;
+    margin-right: 100px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav-links a {
+    font-family: 'Jaro', sans-serif;
+    text-decoration: none;
+    color: rgb(217, 217, 217);
+    font-weight: bold;
+    padding-left: 10px;
+    position: relative; /* Add this line */
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 10px; /* Increase this value to move the underline to the right */
+    background-color: #64ffda;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out;
+}
+
+.nav-links a:hover {
+    color: #ffffff;
+}
+
+.nav-links a:hover::after {
+    visibility: visible;
+    width: 90%;
+}
+

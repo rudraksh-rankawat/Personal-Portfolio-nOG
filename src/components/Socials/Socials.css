@@ -1,0 +1,24 @@
+.logo:hover{
+    /* Add glow effect */
+    filter: brightness(1.22);
+    transition: filter 0.5s ease;
+}
+
+.logo {
+    color: rgb(15, 104, 188);
+    transition: filter 0.5s ease;
+}
+.logo.blue {
+    color: rgb(15, 104, 188);
+    transition: filter 0.5s ease;
+}
+
+
+
+.social-logo {
+    margin: 10px;
+    padding: 5px;
+    width: max-content;
+    background-color: rgba(0, 0, 0, 0);
+    transition: filter 0.5s ease;
+}

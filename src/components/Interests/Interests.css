@@ -1,0 +1,57 @@
+.interest-page {
+    padding: 20px;
+    background-color: #02001e;
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+.interest {
+    position: relative;
+    color: white;
+}
+
+.interest-content{
+    margin-top: 25px;
+    display: grid;
+    grid-template-columns: repeat(3
+    , 1fr);
+}
+
+.interest strong::after {
+    content: '';
+    position: absolute;
+    left: 90px;
+    bottom: 9px;
+    /* bottom: 0px; Adjust this value to move the underline up or down */
+    width: 40%;
+    height: 3px; /* Adjust this value to change the thickness of the underline */
+    background-color: white; /* Adjust this value to change the color of the underline */
+}
+
+.interest-card {
+    color: white;
+    display: flex;
+    align-items: center;
+    height: 80px;
+    width: 300px;
+    margin: 10px;
+    padding-left: 30px;
+    background-color: #112240;
+    transition: scale 0.3s ease;
+}
+
+.interest-card:hover {
+    scale: 1.05;
+    transition: scale 0.5s ease;
+
+}
+
+.interest-card > * {
+    margin-right: 10px;
+}
+
+.interest-title {
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+}

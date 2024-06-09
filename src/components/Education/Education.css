@@ -1,0 +1,64 @@
+.education-page {
+    padding: 20px;
+    background-color: #02001e;
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+.education {
+    position: relative;
+    color: white;
+}
+
+.education-content{
+    margin-top: 25px;
+    display: grid;
+    grid-template-columns: repeat(3
+    , 1fr);
+}
+
+.education strong::after {
+    content: '';
+    position: absolute;
+    left: 110px;
+    bottom: 9px;
+    /* bottom: 0px; Adjust this value to move the underline up or down */
+    width: 40%;
+    height: 3px; /* Adjust this value to change the thickness of the underline */
+    background-color: white; /* Adjust this value to change the color of the underline */
+}
+
+.education-card {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    padding: 20px;
+    height: max-content;
+    width: 300px;
+    margin: 10px;
+    background-color: #112240;
+    transition: scale 0.3s ease;
+}
+
+.education-card:hover {
+    scale: 1.05;
+    transition: scale 0.5s ease;
+
+}
+
+.education-title {
+    color: white;
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    text-decoration: underline;
+    margin-bottom: 30px;
+}
+
+.education-card > * {
+    margin-right: 10px;
+}
+
+.education-title {
+    color: white;
+    text-transform: uppercase;
+}

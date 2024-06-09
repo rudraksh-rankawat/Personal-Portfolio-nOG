@@ -1,0 +1,73 @@
+.profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: #02001e;
+    height: 100vh;
+    width: 100%;
+    padding-top: 100px;
+    box-sizing: border-box;
+}
+
+.profile-avatar {
+    margin-top: 50px;
+    border-radius: 50%;
+    background-color: rgb(7, 23, 46);
+    overflow: hidden; /* Ensures the image is contained within the border-radius */
+}
+
+.profile-avatar img {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover; /* Ensures the image covers the area */
+}
+
+@font-face {
+    font-family: 'Righteous';
+    src: url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+}
+
+@font-face {
+    font-family: 'Jaro';
+    src: url('https://fonts.googleapis.com/css2?family=Jaro:opsz@6..72&display=swap');
+}
+
+.name-intro {
+    font-family: 'Righteous', sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: #64ffda;
+    text-align: center; /* Ensures the text is centered */
+}
+
+.name {
+    font-family: 'Jaro', sans-serif;
+    font-weight: 800;
+    font-size: 2.5rem;
+    color: white;
+    text-align: center; /* Ensures the text is centered */
+}
+
+.profession {
+    font-family: 'Jaro', sans-serif;
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: white;
+    margin-bottom: 100px;
+    display: flex;
+    justify-content: center; /* Ensures the text is centered */
+}
+
+.profession > span {
+    color: #64ff88;
+}
+
+.social-logos {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 20%;
+    margin-bottom: 50px;
+}
