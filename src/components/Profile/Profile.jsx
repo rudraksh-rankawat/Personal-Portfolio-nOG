@@ -1,5 +1,5 @@
 import './Profile.css';
-import Avatar from '../../assets/avatar.png';
+import Avatar from '../../assets/dp.jpeg';
 import { faGithub, faLinkedin, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import Socials from '../Socials/Socials';
 import Typewriter from 'typewriter-effect';
@@ -29,7 +29,7 @@ function Profile() {
                 <img src={Avatar} alt="Avatar" />
             </div>
             <div className='name-intro'>
-                Hi, my name is
+                Hi, I am
             </div>
             <div className='name'>
                 Rudraksh Rankawat
