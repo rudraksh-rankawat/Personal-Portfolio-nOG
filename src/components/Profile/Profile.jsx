@@ -11,7 +11,7 @@ const socials = [
         color: "blue"
     },
     {
-        profileLink: "https://x.com/rankawat911",
+        profileLink: "https://x.com/rankawwat",
         logo: faTwitter,
         color: "black"
     },
