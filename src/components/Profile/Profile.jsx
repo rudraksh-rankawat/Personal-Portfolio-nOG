@@ -11,7 +11,7 @@ const socials = [
         color: "blue"
     },
     {
-        profileLink: "https://x.com/rainy_rudra",
+        profileLink: "https://x.com/rankawat911",
         logo: faTwitter,
         color: "black"
     },
@@ -39,7 +39,7 @@ function Profile() {
                 <span style={{marginLeft: '10px'}}>
                     <Typewriter
                         options={{
-                            strings: ['Software Developer', 'AI Enthusiast', 'Product Manager'],
+                            strings: ['Software Engineer', 'Tech Enthusiast', 'Product Builder'],
                             autoStart: true,
                             loop: true,
                         }}
