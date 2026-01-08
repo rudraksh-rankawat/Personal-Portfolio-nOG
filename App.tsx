@@ -192,6 +192,82 @@ const App: React.FC = () => {
   const showLight = isLightMode || isThemePreview;
   const theme = showLight ? themes.light : themes.dark;
 
+  // Console Easter Egg for devs 🥚
+  useEffect(() => {
+    const asciiArt = `
+%c
+██████╗ ██╗   ██╗██████╗ ██████╗  █████╗ ██╗  ██╗███████╗██╗  ██╗
+██╔══██╗██║   ██║██╔══██╗██╔══██╗██╔══██╗██║ ██╔╝██╔════╝██║  ██║
+██████╔╝██║   ██║██║  ██║██████╔╝███████║█████╔╝ ███████╗███████║
+██╔══██╗██║   ██║██║  ██║██╔══██╗██╔══██║██╔═██╗ ╚════██║██╔══██║
+██║  ██║╚██████╔╝██████╔╝██║  ██║██║  ██║██║  ██╗███████║██║  ██║
+╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
+`;
+
+    console.log(asciiArt, 'color: #bfff00; font-family: monospace; font-size: 10px;');
+
+    console.log(
+      '%c🚀 Hey there, curious developer! 👋',
+      'color: #88d1e0; font-size: 20px; font-weight: bold; text-shadow: 2px 2px 0px #bfff00;'
+    );
+
+    console.log(
+      '%c' +
+      '╔══════════════════════════════════════════════════════════════╗\n' +
+      '║  You found the secret console message! 🥚                    ║\n' +
+      '║                                                              ║\n' +
+      '║  "Any sufficiently advanced technology is                    ║\n' +
+      '║   indistinguishable from magic." - Arthur C. Clarke          ║\n' +
+      '║                                                              ║\n' +
+      '║  💡 Fun fact: This portfolio has more easter eggs!           ║\n' +
+      '║     Try hovering on my photo for CHAOS MODE 🔥               ║\n' +
+      '║     Click the spinning orb to toggle themes 🌙☀️             ║\n' +
+      '║                                                              ║\n' +
+      '║  📧 Let\'s connect: rankawatrudraksh@gmail.com               ║\n' +
+      '║  🐦 Twitter: @rankawwat                                      ║\n' +
+      '║  💼 LinkedIn: /in/rudraksh-rankawat                          ║\n' +
+      '╚══════════════════════════════════════════════════════════════╝',
+      'color: #bfff00; font-family: monospace; font-size: 12px; line-height: 1.5;'
+    );
+
+    console.log(
+      '%c⚠️ Looking to hire? Type "hire" in the console! 💼',
+      'color: #fbbf24; font-size: 14px; font-weight: bold; background: #0a0a0a; padding: 8px 16px; border-radius: 4px;'
+    );
+
+    // Secret hire command
+    (window as any).hire = () => {
+      console.log('%c🎉 AMAZING! You actually did it!', 'color: #bfff00; font-size: 24px; font-weight: bold;');
+      console.log('%c📧 Shoot me an email at: rankawatrudraksh@gmail.com', 'color: #88d1e0; font-size: 16px;');
+      console.log('%c💬 Subject: "I found the easter egg - Let\'s talk!"', 'color: #a78bfa; font-size: 14px;');
+      console.log('%c🚀 I\'m always excited to work on interesting projects!', 'color: #34d399; font-size: 14px;');
+      return '✨ Thanks for exploring! Looking forward to connecting!';
+    };
+
+    // Another secret command
+    (window as any).rickroll = () => {
+      window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank');
+      return '🎵 Never gonna give you up...';
+    };
+
+    (window as any).matrix = () => {
+      console.log('%c' +
+        '01001000 01100101 01101100 01101100 01101111\n' +
+        '01010111 01101111 01110010 01101100 01100100\n' +
+        '00100001 00100000 01011001 01101111 01110101\n' +
+        '00100000 01100110 01101111 01110101 01101110\n' +
+        '01100100 00100000 01110100 01101000 01100101\n' +
+        '00100000 01001101 01100001 01110100 01110010\n' +
+        '01101001 01111000 00100001',
+        'color: #bfff00; font-family: monospace; font-size: 10px;'
+      );
+      return 'Wake up, Neo...';
+    };
+
+    console.log('%c💡 Secret commands: hire(), rickroll(), matrix()', 'color: #6b7280; font-size: 10px;');
+
+  }, []);
+
   useEffect(() => {
     if (isPhotoHovered) {
       const intervals: NodeJS.Timeout[] = [];
@@ -257,7 +333,7 @@ const App: React.FC = () => {
             </div>
           </div>
           <span className={`font-mono text-lg font-bold tracking-tighter uppercase ${isPhotoHovered ? 'glitch-color-active' : ''}`}>
-            {isPhotoHovered ? '!!CHAOS_MODE!!' : isThemePreview ? (showLight ? '☀️ Light Mode' : '🌙 Dark Mode') : 'Rudraksh.dimension'}
+            {isPhotoHovered ? '!!CHAOS_MODE!!' : isThemePreview ? (showLight ? 'Light Mode' : '🌙 Dark Mode') : 'Rudraksh.dimension'}
           </span>
         </div>
         <div className={`hidden md:flex gap-8 text-xs font-mono uppercase tracking-widest ${isPhotoHovered ? 'glitch-active' : ''}`}>
