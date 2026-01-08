@@ -12,7 +12,8 @@ import {
   Wand2,
   Code2,
   Rocket,
-  Zap
+  Zap,
+  Twitter
 } from 'lucide-react';
 
 // --- Data ---
@@ -63,7 +64,7 @@ const EXPERIENCE = [
 const FLYING_PHRASES = [
   { text: "I LOVE PHYSICS ⚛️", color: "#bfff00" },
   { text: "ALAN TURING WAS GOAT 🐐", color: "#88d1e0" },
-  { text: "BITS PILANI 🎓", color: "#ff6b6b" },
+  { text: "E=MC²", color: "#ff6b6b" },
   { text: "QUANTUM SUPREMACY 🌌", color: "#a78bfa" },
   { text: "HELLO WORLD 👋", color: "#f472b6" },
   { text: "42 IS THE ANSWER 🌍", color: "#34d399" },
@@ -125,6 +126,7 @@ const Navbar = ({ isChaos }: { isChaos: boolean }) => (
     <div className={`flex gap-4 ${isChaos ? 'glitch-active' : ''}`}>
       <a href="https://github.com/rudraksh-rankawat" target="_blank" className={`hover:text-[#bfff00] ${isChaos ? 'float-chaos' : ''}`}><Github size={18} /></a>
       <a href="https://linkedin.com/in/rudraksh-rankawat" target="_blank" className={`hover:text-[#bfff00] ${isChaos ? 'float-chaos' : ''}`}><Linkedin size={18} /></a>
+      <a href="https://x.com/rankawwat" target="_blank" className={`hover:text-[#bfff00] ${isChaos ? 'float-chaos' : ''}`}><Twitter size={18} /></a>
     </div>
   </nav>
 );
@@ -328,8 +330,9 @@ const App: React.FC = () => {
         </div>
         <div className={`flex gap-6 ${isPhotoHovered ? 'glitch-active' : ''}`}>
           <a href="mailto:rankawatrudraksh@gmail.com" className={`p-4 bg-[#111] border border-[#333] hover:border-[#bfff00] transition-colors rounded-full ${isPhotoHovered ? 'float-chaos' : ''}`} style={{ animationDelay: '0ms' }}><Mail size={24} /></a>
-          <a href="https://github.com/rudraksh-rankawat" className={`p-4 bg-[#111] border border-[#333] hover:border-[#bfff00] transition-colors rounded-full ${isPhotoHovered ? 'float-chaos' : ''}`} style={{ animationDelay: '100ms' }}><Github size={24} /></a>
-          <a href="https://linkedin.com/in/rudraksh-rankawat" className={`p-4 bg-[#111] border border-[#333] hover:border-[#bfff00] transition-colors rounded-full ${isPhotoHovered ? 'float-chaos' : ''}`} style={{ animationDelay: '200ms' }}><Linkedin size={24} /></a>
+          <a href="https://github.com/rudraksh-rankawat" target="_blank" className={`p-4 bg-[#111] border border-[#333] hover:border-[#bfff00] transition-colors rounded-full ${isPhotoHovered ? 'float-chaos' : ''}`} style={{ animationDelay: '100ms' }}><Github size={24} /></a>
+          <a href="https://linkedin.com/in/rudraksh-rankawat" target="_blank" className={`p-4 bg-[#111] border border-[#333] hover:border-[#bfff00] transition-colors rounded-full ${isPhotoHovered ? 'float-chaos' : ''}`} style={{ animationDelay: '200ms' }}><Linkedin size={24} /></a>
+          <a href="https://x.com/rankawwat" target="_blank" className={`p-4 bg-[#111] border border-[#333] hover:border-[#bfff00] transition-colors rounded-full ${isPhotoHovered ? 'float-chaos' : ''}`} style={{ animationDelay: '300ms' }}><Twitter size={24} /></a>
         </div>
       </footer>
 
