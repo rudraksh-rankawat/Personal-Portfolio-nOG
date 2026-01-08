@@ -1,0 +1,389 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-[#0a0a0a] text-white overflow-x-hidden;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0a0a0a;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #333;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #bfff00;
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+
+.portal-circle {
+  animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: .5;
+    transform: scale(1.1);
+  }
+}
+
+/* Glitch animation for text */
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+    text-shadow: none;
+  }
+
+  10% {
+    transform: translate(-3px, 2px);
+    text-shadow: 3px 0 #bfff00, -3px 0 #88d1e0;
+  }
+
+  20% {
+    transform: translate(3px, -2px);
+    text-shadow: -3px 0 #bfff00, 3px 0 #88d1e0;
+  }
+
+  30% {
+    transform: translate(-2px, 1px);
+    text-shadow: 2px 0 #ff00ff, -2px 0 #00ffff;
+  }
+
+  40% {
+    transform: translate(2px, -1px);
+    text-shadow: -2px 0 #bfff00, 2px 0 #88d1e0;
+  }
+
+  50% {
+    transform: translate(-1px, 2px);
+    text-shadow: 1px 0 #ff00ff, -1px 0 #00ffff;
+  }
+
+  60% {
+    transform: translate(1px, -2px);
+    text-shadow: -1px 0 #bfff00, 1px 0 #88d1e0;
+  }
+
+  70% {
+    transform: translate(0);
+    text-shadow: none;
+  }
+
+  100% {
+    transform: translate(0);
+    text-shadow: none;
+  }
+}
+
+@keyframes glitch-skew {
+  0% {
+    transform: skew(0deg);
+  }
+
+  10% {
+    transform: skew(2deg);
+  }
+
+  20% {
+    transform: skew(-1deg);
+  }
+
+  30% {
+    transform: skew(3deg);
+  }
+
+  40% {
+    transform: skew(-2deg);
+  }
+
+  50% {
+    transform: skew(1deg);
+  }
+
+  60% {
+    transform: skew(-3deg);
+  }
+
+  70% {
+    transform: skew(0deg);
+  }
+
+  100% {
+    transform: skew(0deg);
+  }
+}
+
+@keyframes glitch-color {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+
+  25% {
+    filter: hue-rotate(90deg);
+  }
+
+  50% {
+    filter: hue-rotate(180deg);
+  }
+
+  75% {
+    filter: hue-rotate(270deg);
+  }
+
+  100% {
+    filter: hue-rotate(360deg);
+  }
+}
+
+.glitch-active {
+  animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+}
+
+.glitch-skew-active {
+  animation: glitch-skew 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+}
+
+.glitch-color-active {
+  animation: glitch-color 0.5s linear infinite;
+}
+
+/* Bullet train flying text */
+@keyframes fly-right {
+  0% {
+    transform: translateX(-100vw) rotate(-2deg);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(100vw) rotate(2deg);
+    opacity: 0;
+  }
+}
+
+@keyframes fly-left {
+  0% {
+    transform: translateX(100vw) rotate(2deg);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(-100vw) rotate(-2deg);
+    opacity: 0;
+  }
+}
+
+@keyframes fly-diagonal {
+  0% {
+    transform: translate(-100vw, 50vh) rotate(-5deg) scale(0.5);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+    transform: translate(-50vw, 25vh) rotate(-3deg) scale(1);
+  }
+
+  80% {
+    opacity: 1;
+    transform: translate(50vw, -25vh) rotate(3deg) scale(1);
+  }
+
+  100% {
+    transform: translate(100vw, -50vh) rotate(5deg) scale(0.5);
+    opacity: 0;
+  }
+}
+
+@keyframes screen-shake {
+
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+
+  10% {
+    transform: translate(-2px, -1px) rotate(-0.5deg);
+  }
+
+  20% {
+    transform: translate(2px, 1px) rotate(0.5deg);
+  }
+
+  30% {
+    transform: translate(-1px, 2px) rotate(-0.5deg);
+  }
+
+  40% {
+    transform: translate(1px, -1px) rotate(0.5deg);
+  }
+
+  50% {
+    transform: translate(-2px, 1px) rotate(-0.5deg);
+  }
+
+  60% {
+    transform: translate(2px, -2px) rotate(0.5deg);
+  }
+
+  70% {
+    transform: translate(-1px, -1px) rotate(-0.5deg);
+  }
+
+  80% {
+    transform: translate(1px, 2px) rotate(0.5deg);
+  }
+
+  90% {
+    transform: translate(-2px, -2px) rotate(-0.5deg);
+  }
+}
+
+@keyframes navbar-glitch {
+
+  0%,
+  100% {
+    transform: translateX(0);
+    filter: none;
+  }
+
+  20% {
+    transform: translateX(-5px);
+    filter: hue-rotate(90deg);
+  }
+
+  40% {
+    transform: translateX(5px);
+    filter: hue-rotate(180deg);
+  }
+
+  60% {
+    transform: translateX(-3px);
+    filter: hue-rotate(270deg);
+  }
+
+  80% {
+    transform: translateX(3px);
+    filter: hue-rotate(360deg);
+  }
+}
+
+@keyframes float-chaos {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  25% {
+    transform: translateY(-10px) rotate(2deg);
+  }
+
+  50% {
+    transform: translateY(5px) rotate(-1deg);
+  }
+
+  75% {
+    transform: translateY(-5px) rotate(1deg);
+  }
+}
+
+.fly-text {
+  position: fixed;
+  white-space: nowrap;
+  font-size: 3rem;
+  font-weight: 900;
+  font-family: monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  z-index: 9999;
+  pointer-events: none;
+  text-shadow: 0 0 20px currentColor, 0 0 40px currentColor;
+}
+
+.fly-right {
+  animation: fly-right 1.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+.fly-left {
+  animation: fly-left 1.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+.fly-diagonal {
+  animation: fly-diagonal 2s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+.screen-shake {
+  animation: screen-shake 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+}
+
+.navbar-glitch {
+  animation: navbar-glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+}
+
+.float-chaos {
+  animation: float-chaos 0.5s ease-in-out infinite;
+}
+
+/* Custom noise overlay */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 100;
+}
