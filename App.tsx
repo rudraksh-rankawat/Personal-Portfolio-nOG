@@ -531,7 +531,7 @@ const App: React.FC = () => {
         <div className="flex justify-between items-end mb-12">
           <div className="space-y-4">
             <h2 className={`text-4xl font-black uppercase tracking-tighter ${isChaosActive ? 'glitch-active' : ''}`}>Selected Inventions</h2>
-            <p className={`font-mono text-xs max-w-md uppercase ${isChaosActive ? 'glitch-active' : ''}`} style={{ color: theme.textMuted }}>Things I built when curiosity peaked and the laws of physics allowed it.</p>
+            <p className={`font-mono text-xs max-w-md uppercase ${isChaosActive ? 'glitch-active' : ''}`} style={{ color: theme.textMuted }}>Things I built when curiosity peaked and the compilers didn’t complain..</p>
           </div>
           <div className={`hidden md:block h-[1px] flex-1 mx-8 mb-4 transition-colors duration-500`} style={{ backgroundColor: isChaosActive ? `${theme.accent}80` : theme.borderLight }}></div>
         </div>
