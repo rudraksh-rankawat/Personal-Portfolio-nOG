@@ -357,7 +357,7 @@ const App: React.FC = () => {
       ))}
 
       {/* Hero Section */}
-      <section id="about" className="relative pt-32 pb-20 px-6 max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12">
+      <section id="about" className="relative pt-24 md:pt-32 pb-20 px-6 max-w-6xl mx-auto flex flex-col-reverse md:flex-row items-center gap-8 md:gap-12">
         <div className={`flex-1 space-y-8 transition-all duration-300 ${isPhotoHovered ? 'glitch-skew-active' : ''}`}>
           <div
             className={`inline-flex items-center gap-2 px-3 py-1 rounded-full ${isPhotoHovered ? 'glitch-color-active' : ''}`}
@@ -406,17 +406,18 @@ const App: React.FC = () => {
             </a>
           </div>
         </div>
-        <div className="flex-1 relative">
+        <div className="flex-1 relative w-full max-w-sm md:max-w-none mx-auto">
           <div
             className={`w-full aspect-square border-4 relative overflow-hidden group cursor-pointer transition-all duration-300`}
             style={{ borderColor: isPhotoHovered ? theme.accent : theme.border }}
             onMouseEnter={() => setIsPhotoHovered(true)}
             onMouseLeave={() => setIsPhotoHovered(false)}
+            onClick={() => setIsPhotoHovered(!isPhotoHovered)}
           >
             <img
               src="/photo.jpeg"
               alt="Rudraksh Rankawat"
-              className={`absolute inset-0 w-full h-full object-cover object-top transition-all duration-500 ${isPhotoHovered ? 'grayscale scale-110 blur-[1px]' : ''}`}
+              className={`absolute inset-0 w-full h-full object-cover transition-all duration-500 ${isPhotoHovered ? 'grayscale scale-110 blur-[1px]' : ''}`}
             />
             <div
               className={`absolute inset-0 transition-all duration-500`}
@@ -434,7 +435,7 @@ const App: React.FC = () => {
             ></div>
             {isPhotoHovered && (
               <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-6xl font-mono font-bold glitch-active" style={{ color: theme.accent }}>⚡CHAOS⚡</span>
+                <span className="text-3xl md:text-6xl font-mono font-bold glitch-active" style={{ color: theme.accent }}>⚡CHAOS⚡</span>
               </div>
             )}
             <div className={`absolute bottom-4 left-4 font-mono text-[10px] z-10 ${isPhotoHovered ? 'glitch-active' : ''}`} style={{ color: theme.textMuted }}>

@@ -340,7 +340,7 @@
 .fly-text {
   position: fixed;
   white-space: nowrap;
-  font-size: 3rem;
+  font-size: 1.5rem;
   font-weight: 900;
   font-family: monospace;
   text-transform: uppercase;
@@ -348,6 +348,12 @@
   z-index: 9999;
   pointer-events: none;
   text-shadow: 0 0 20px currentColor, 0 0 40px currentColor;
+}
+
+@media (min-width: 768px) {
+  .fly-text {
+    font-size: 3rem;
+  }
 }
 
 .fly-right {
