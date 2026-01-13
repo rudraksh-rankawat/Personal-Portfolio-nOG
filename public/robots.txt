@@ -1,0 +1,8 @@
+# Portfolio - Rudraksh Rankawat
+# https://rudraksh.vercel.app
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://rudraksh.vercel.app/sitemap.xml
