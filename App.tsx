@@ -49,14 +49,33 @@ const SKILLS = {
   "Tools & AI": ["Docker", "Git", "VisionOS SDK", "CrewAI", "PostgreSQL", "Supabase"]
 };
 
+const SKILL_SUBTITLES: Record<string, string> = {
+  Languages: "Even though I'm language agnostic",
+  Frameworks: "I like some of them",
+  "Tools & AI": "Just software"
+};
+
 const EXPERIENCE = [
+  {
+    company: "Zeneta.in",
+    role: "Co-Founder | Built CONCEPT01.IN",
+    period: "2024 – Present",
+    link: "https://www.concept01.in",
+    points: [
+      "Built the core backend architecture for a creator & event platform using Node.js, Prisma, PostgreSQL.",
+      "Implemented Razorpay payment gateway with secure webhooks, automated subscription workflows, and membership tier management.",
+      "Designed an in-platform credit system supporting wallet balance, deductions, and transaction history.",
+      "Engineered a room & event booking system with availability checks, conflict prevention, and atomic database transactions.",
+      "Owned backend deployment, schema design, and production stability while coordinating requirements directly with stakeholders."
+    ]
+  },
   {
     company: "Kivio Technologies",
     role: "Software Development Intern",
     period: "June 2024 – Sept 2024",
     points: [
-      "Engineered a scalable eCommerce mobile application using React Native and Node.js.",
-      "Integrated Strapi.js CMS, reducing content update turnaround time by 40%.",
+      "Engineered a scalable eCommerce mobile application using React Native (Expo) and Node.js.",
+      "Integrated Strapi.js CMS, reducing content update turnaround time for product updates.",
       "Collaborated with cross-functional teams to define feature roadmaps."
     ]
   }
@@ -64,17 +83,18 @@ const EXPERIENCE = [
 
 // Flying text phrases
 const FLYING_PHRASES = [
-  { text: "I LOVE PHYSICS ⚛️", color: "#bfff00" },
-  { text: "ALAN TURING WAS GOAT 🐐", color: "#88d1e0" },
-  { text: "E=MC²", color: "#ff6b6b" },
-  { text: "QUANTUM SUPREMACY 🌌", color: "#a78bfa" },
-  { text: "HELLO WORLD 👋", color: "#f472b6" },
-  { text: "42 IS THE ANSWER 🌍", color: "#34d399" },
-  { text: "RECURSION IS LIFE 🔄", color: "#fbbf24" },
-  { text: "CTRL+Z MY LIFE 💀", color: "#60a5fa" },
-  { text: "I USE ARCH BTW 🐧", color: "#c084fc" },
-  { text: "COFFEE.exe ☕", color: "#fb923c" },
+  { text: "IT WORKS ON PROD 🤷‍♂️", color: "#bfff00" },
+  { text: "TRUST NOTHING, LOG EVERYTHING 🧾", color: "#88d1e0" },
+  { text: "IDEMPOTENCY MATTERS 🔁", color: "#ff6b6b" },
+  { text: "DISTRIBUTED SYSTEMS ARE LYING 😐", color: "#a78bfa" },
+  { text: "CACHE INVALIDATION IS EASY 🧠", color: "#f472b6" },
+  { text: "SCHEMA > SPEED 📐", color: "#34d399" },
+  { text: "EVENTUAL CONSISTENCY 😶‍🌫️", color: "#fbbf24" },
+  { text: "WEBHOOKS WILL FAIL 🔔", color: "#60a5fa" },
+  { text: "if err != nil", color: "#c084fc" },
+  { text: "SHIPPED > PERFECT 🚀", color: "#fb923c" },
 ];
+
 
 // --- Theme Colors ---
 const themes = {
@@ -184,9 +204,23 @@ const ProjectCard = ({ project, isChaos, index, isLight }: ProjectCardProps) => 
 
 const App: React.FC = () => {
   const [isPhotoHovered, setIsPhotoHovered] = useState(false);
+  const [isChaosLocked, setIsChaosLocked] = useState(false);
   const [isLightMode, setIsLightMode] = useState(false);
   const [isThemePreview, setIsThemePreview] = useState(false);
   const [flyingTexts, setFlyingTexts] = useState<Array<{ id: number; phrase: typeof FLYING_PHRASES[0]; direction: 'right' | 'left' | 'diagonal'; top: string; delay: number }>>([]);
+  const [activeSkillCategory, setActiveSkillCategory] = useState(0);
+
+  // Chaos mode is active if either hovered OR locked via click
+  const isChaosActive = isPhotoHovered || isChaosLocked;
+
+  // Cycle through skill categories every 2 seconds
+  const skillCategories = Object.keys(SKILLS);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveSkillCategory(prev => (prev + 1) % skillCategories.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [skillCategories.length]);
 
   // Determine if we should show light theme (either active or previewing)
   const showLight = isLightMode || isThemePreview;
@@ -269,33 +303,36 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (isPhotoHovered) {
-      const intervals: NodeJS.Timeout[] = [];
+    if (isChaosActive) {
       const directions: Array<'right' | 'left' | 'diagonal'> = ['right', 'left', 'diagonal'];
+      let phraseIndex = 0;
 
+      // Spawn all phrases initially with staggered delays
       FLYING_PHRASES.forEach((phrase, index) => {
-        const timeout = setTimeout(() => {
-          const id = Date.now() + index;
-          const direction = directions[index % 3];
-          const top = `${10 + (index * 8) % 80}%`;
-
-          setFlyingTexts(prev => [...prev, { id, phrase, direction, top, delay: 0 }]);
-
-          setTimeout(() => {
-            setFlyingTexts(prev => prev.filter(t => t.id !== id));
-          }, 2500);
-        }, index * 200);
-
-        intervals.push(timeout);
+        const id = Date.now() + index;
+        const direction = directions[index % 3];
+        const top = `${10 + (index * 8) % 80}%`;
+        setFlyingTexts(prev => [...prev, { id, phrase, direction, top, delay: index * 500 }]);
       });
 
+      // Continuously spawn new phrases every 4 seconds
+      const interval = setInterval(() => {
+        const phrase = FLYING_PHRASES[phraseIndex % FLYING_PHRASES.length];
+        const id = Date.now() + phraseIndex;
+        const direction = directions[phraseIndex % 3];
+        const top = `${Math.random() * 70 + 10}%`;
+
+        setFlyingTexts(prev => [...prev, { id, phrase, direction, top, delay: 0 }]);
+        phraseIndex++;
+      }, 4000);
+
       return () => {
-        intervals.forEach(clearTimeout);
+        clearInterval(interval);
       };
     } else {
       setFlyingTexts([]);
     }
-  }, [isPhotoHovered]);
+  }, [isChaosActive]);
 
   const handleThemeToggle = () => {
     setIsLightMode(!isLightMode);
@@ -303,7 +340,7 @@ const App: React.FC = () => {
 
   return (
     <div
-      className={`min-h-screen font-sans transition-all duration-500 ${isPhotoHovered ? 'screen-shake' : ''}`}
+      className={`min-h-screen font-sans transition-all duration-500 ${isChaosActive ? 'screen-shake' : ''}`}
       style={{
         backgroundColor: theme.bg,
         color: theme.text,
@@ -311,15 +348,15 @@ const App: React.FC = () => {
     >
       {/* Navbar */}
       <nav
-        className={`fixed top-0 w-full z-50 px-6 py-4 flex justify-between items-center backdrop-blur-sm transition-all duration-500 ${isPhotoHovered ? 'navbar-glitch' : ''}`}
+        className={`fixed top-0 w-full z-50 px-6 py-4 flex justify-between items-center backdrop-blur-sm transition-all duration-500 ${isChaosActive ? 'navbar-glitch' : ''}`}
         style={{
           borderBottom: `1px solid ${theme.borderLight}`,
-          backgroundColor: isPhotoHovered ? 'rgba(191,255,0,0.1)' : 'transparent',
+          backgroundColor: isChaosActive ? 'rgba(191,255,0,0.1)' : 'transparent',
         }}
       >
-        <div className={`flex items-center gap-2 group ${isPhotoHovered ? 'glitch-active' : ''}`}>
+        <div className={`flex items-center gap-2 group ${isChaosActive ? 'glitch-active' : ''}`}>
           <div
-            className={`w-8 h-8 rounded-full cursor-pointer transition-all duration-300 ${isPhotoHovered ? 'animate-ping' : 'animate-spin-slow'} ${isThemePreview ? 'scale-125' : ''}`}
+            className={`w-8 h-8 rounded-full cursor-pointer transition-all duration-300 ${isChaosActive ? 'animate-ping' : 'animate-spin-slow'} ${isThemePreview ? 'scale-125' : ''}`}
             style={{ backgroundColor: theme.accent }}
             onMouseEnter={() => setIsThemePreview(true)}
             onMouseLeave={() => setIsThemePreview(false)}
@@ -332,20 +369,20 @@ const App: React.FC = () => {
               )}
             </div>
           </div>
-          <span className={`font-mono text-lg font-bold tracking-tighter uppercase ${isPhotoHovered ? 'glitch-color-active' : ''}`}>
-            {isPhotoHovered ? '!!CHAOS_MODE!!' : isThemePreview ? (showLight ? 'Light Mode' : '🌙 Dark Mode') : 'Rudraksh.dimension'}
+          <span className={`font-mono text-lg font-bold tracking-tighter uppercase ${isChaosActive ? 'glitch-color-active' : ''}`}>
+            {isChaosActive ? '!!CHAOS_MODE!!' : isThemePreview ? (showLight ? 'Light Mode' : '🌙 Dark Mode') : 'Rudraksh.dimension'}
           </span>
         </div>
-        <div className={`hidden md:flex gap-8 text-xs font-mono uppercase tracking-widest ${isPhotoHovered ? 'glitch-active' : ''}`}>
-          <a href="#about" className={`transition-colors ${isPhotoHovered ? 'float-chaos' : ''}`} style={{ color: theme.textSecondary }} onMouseEnter={(e) => e.currentTarget.style.color = theme.accent} onMouseLeave={(e) => e.currentTarget.style.color = theme.textSecondary}>About</a>
-          <a href="#projects" className={`transition-colors ${isPhotoHovered ? 'float-chaos' : ''}`} style={{ color: theme.textSecondary }} onMouseEnter={(e) => e.currentTarget.style.color = theme.accent} onMouseLeave={(e) => e.currentTarget.style.color = theme.textSecondary}>Inventions</a>
-          <a href="#experience" className={`transition-colors ${isPhotoHovered ? 'float-chaos' : ''}`} style={{ color: theme.textSecondary }} onMouseEnter={(e) => e.currentTarget.style.color = theme.accent} onMouseLeave={(e) => e.currentTarget.style.color = theme.textSecondary}>Timeline</a>
-          <a href="#contact" className={`transition-colors ${isPhotoHovered ? 'float-chaos' : ''}`} style={{ color: theme.textSecondary }} onMouseEnter={(e) => e.currentTarget.style.color = theme.accent} onMouseLeave={(e) => e.currentTarget.style.color = theme.textSecondary}>Signal</a>
+        <div className={`hidden md:flex gap-8 text-xs font-mono uppercase tracking-widest ${isChaosActive ? 'glitch-active' : ''}`}>
+          <a href="#about" className={`transition-colors ${isChaosActive ? 'float-chaos' : ''}`} style={{ color: theme.textSecondary }} onMouseEnter={(e) => e.currentTarget.style.color = theme.accent} onMouseLeave={(e) => e.currentTarget.style.color = theme.textSecondary}>About</a>
+          <a href="#projects" className={`transition-colors ${isChaosActive ? 'float-chaos' : ''}`} style={{ color: theme.textSecondary }} onMouseEnter={(e) => e.currentTarget.style.color = theme.accent} onMouseLeave={(e) => e.currentTarget.style.color = theme.textSecondary}>Inventions</a>
+          <a href="#experience" className={`transition-colors ${isChaosActive ? 'float-chaos' : ''}`} style={{ color: theme.textSecondary }} onMouseEnter={(e) => e.currentTarget.style.color = theme.accent} onMouseLeave={(e) => e.currentTarget.style.color = theme.textSecondary}>Timeline</a>
+          <a href="#contact" className={`transition-colors ${isChaosActive ? 'float-chaos' : ''}`} style={{ color: theme.textSecondary }} onMouseEnter={(e) => e.currentTarget.style.color = theme.accent} onMouseLeave={(e) => e.currentTarget.style.color = theme.textSecondary}>Signal</a>
         </div>
-        <div className={`flex gap-4 ${isPhotoHovered ? 'glitch-active' : ''}`} style={{ color: theme.textSecondary }}>
-          <a href="https://github.com/rudraksh-rankawat" target="_blank" className={`transition-colors ${isPhotoHovered ? 'float-chaos' : ''}`} onMouseEnter={(e) => e.currentTarget.style.color = theme.accent} onMouseLeave={(e) => e.currentTarget.style.color = theme.textSecondary}><Github size={18} /></a>
-          <a href="https://linkedin.com/in/rudraksh-rankawat" target="_blank" className={`transition-colors ${isPhotoHovered ? 'float-chaos' : ''}`} onMouseEnter={(e) => e.currentTarget.style.color = theme.accent} onMouseLeave={(e) => e.currentTarget.style.color = theme.textSecondary}><Linkedin size={18} /></a>
-          <a href="https://x.com/rankawwat" target="_blank" className={`transition-colors ${isPhotoHovered ? 'float-chaos' : ''}`} onMouseEnter={(e) => e.currentTarget.style.color = theme.accent} onMouseLeave={(e) => e.currentTarget.style.color = theme.textSecondary}><Twitter size={18} /></a>
+        <div className={`flex gap-4 ${isChaosActive ? 'glitch-active' : ''}`} style={{ color: theme.textSecondary }}>
+          <a href="https://github.com/rudraksh-rankawat" target="_blank" className={`transition-colors ${isChaosActive ? 'float-chaos' : ''}`} onMouseEnter={(e) => e.currentTarget.style.color = theme.accent} onMouseLeave={(e) => e.currentTarget.style.color = theme.textSecondary}><Github size={18} /></a>
+          <a href="https://linkedin.com/in/rudraksh-rankawat" target="_blank" className={`transition-colors ${isChaosActive ? 'float-chaos' : ''}`} onMouseEnter={(e) => e.currentTarget.style.color = theme.accent} onMouseLeave={(e) => e.currentTarget.style.color = theme.textSecondary}><Linkedin size={18} /></a>
+          <a href="https://x.com/rankawwat" target="_blank" className={`transition-colors ${isChaosActive ? 'float-chaos' : ''}`} onMouseEnter={(e) => e.currentTarget.style.color = theme.accent} onMouseLeave={(e) => e.currentTarget.style.color = theme.textSecondary}><Twitter size={18} /></a>
         </div>
       </nav>
 
@@ -358,30 +395,30 @@ const App: React.FC = () => {
 
       {/* Hero Section */}
       <section id="about" className="relative pt-24 md:pt-32 pb-20 px-6 max-w-6xl mx-auto flex flex-col-reverse md:flex-row items-center gap-8 md:gap-12">
-        <div className={`flex-1 space-y-8 transition-all duration-300 ${isPhotoHovered ? 'glitch-skew-active' : ''}`}>
+        <div className={`flex-1 space-y-8 transition-all duration-300 ${isChaosActive ? 'glitch-skew-active' : ''}`}>
           <div
-            className={`inline-flex items-center gap-2 px-3 py-1 rounded-full ${isPhotoHovered ? 'glitch-color-active' : ''}`}
+            className={`inline-flex items-center gap-2 px-3 py-1 rounded-full ${isChaosActive ? 'glitch-color-active' : ''}`}
             style={{
               backgroundColor: showLight ? 'rgba(5,150,105,0.1)' : 'rgba(191,255,0,0.1)',
               border: `1px solid ${showLight ? 'rgba(5,150,105,0.2)' : 'rgba(191,255,0,0.2)'}`,
             }}
           >
-            <Zap size={14} style={{ color: theme.accent }} />
+            {/* <Zap size={14} style={{ color: theme.accent }} /> */}
             <span className="text-[10px] font-mono uppercase tracking-widest" style={{ color: theme.accent }}>
-              {isPhotoHovered ? '⚠️ CHAOS PROTOCOL ACTIVE ⚠️' : 'Protocol: Active Curiosity'}
+              {isChaosActive ? '⚠️ CHAOS PROTOCOL ACTIVE ⚠️' : 'Protocol: Active Curiosity'}
             </span>
           </div>
-          <h1 className={`text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] ${isPhotoHovered ? 'glitch-active' : ''}`}>
+          <h1 className={`text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] ${isChaosActive ? 'glitch-active' : ''}`}>
             RUDRAKSH <br />
-            <span className={isPhotoHovered ? 'glitch-color-active' : ''} style={{ color: theme.accentSecondary }}>RANKAWAT</span>
+            <span className={isChaosActive ? 'glitch-color-active' : ''} style={{ color: theme.accentSecondary }}>RANKAWAT</span>
           </h1>
-          <p className={`text-xl max-w-xl font-light leading-relaxed ${isPhotoHovered ? 'glitch-active' : ''}`} style={{ color: theme.textSecondary }}>
+          <p className={`text-xl max-w-xl font-light leading-relaxed ${isChaosActive ? 'glitch-active' : ''}`} style={{ color: theme.textSecondary }}>
             I'm a curious engineer operating across dimensions of Software Engineering, AI/ML, and Product Strategy. Currently studying at BITS Pilani and Scaler School of Technology.
           </p>
-          <div className={`flex gap-4 ${isPhotoHovered ? 'glitch-active' : ''}`}>
+          <div className={`flex gap-4 ${isChaosActive ? 'glitch-active' : ''}`}>
             <a
               href="mailto:rankawatrudraksh@gmail.com"
-              className={`px-8 py-3 font-bold uppercase text-sm tracking-widest transition-all transform active:scale-95 ${isPhotoHovered ? 'float-chaos' : ''}`}
+              className={`px-8 py-3 font-bold uppercase text-sm tracking-widest transition-all transform active:scale-95 ${isChaosActive ? 'float-chaos' : ''}`}
               style={{
                 backgroundColor: theme.accent,
                 color: theme.bg,
@@ -394,7 +431,7 @@ const App: React.FC = () => {
             <a
               href="/CV - Rudraksh Rankawat.pdf"
               download="Rudraksh_Rankawat_Resume.pdf"
-              className={`px-8 py-3 font-bold uppercase text-sm tracking-widest transition-all ${isPhotoHovered ? 'float-chaos glitch-color-active' : ''}`}
+              className={`px-8 py-3 font-bold uppercase text-sm tracking-widest transition-all ${isChaosActive ? 'float-chaos glitch-color-active' : ''}`}
               style={{
                 border: `1px solid ${showLight ? 'rgba(0,0,0,0.2)' : 'rgba(255,255,255,0.2)'}`,
                 color: theme.text,
@@ -409,15 +446,15 @@ const App: React.FC = () => {
         <div className="flex-1 relative w-full max-w-sm md:max-w-none mx-auto">
           <div
             className={`w-full aspect-square border-4 relative overflow-hidden group cursor-pointer transition-all duration-300`}
-            style={{ borderColor: isPhotoHovered ? theme.accent : theme.border }}
+            style={{ borderColor: isChaosActive ? theme.accent : theme.border }}
             onMouseEnter={() => setIsPhotoHovered(true)}
             onMouseLeave={() => setIsPhotoHovered(false)}
-            onClick={() => setIsPhotoHovered(!isPhotoHovered)}
+            onClick={() => setIsChaosLocked(!isChaosLocked)}
           >
             <img
               src="/photo.jpeg"
               alt="Rudraksh Rankawat"
-              className={`absolute inset-0 w-full h-full object-cover transition-all duration-500 ${isPhotoHovered ? 'grayscale scale-110 blur-[1px]' : ''}`}
+              className={`absolute inset-0 w-full h-full object-cover transition-all duration-500 ${isChaosActive ? 'grayscale scale-110 blur-[1px]' : ''}`}
             />
             <div
               className={`absolute inset-0 transition-all duration-500`}
@@ -438,27 +475,35 @@ const App: React.FC = () => {
                 <span className="text-3xl md:text-6xl font-mono font-bold glitch-active" style={{ color: theme.accent }}>⚡CHAOS⚡</span>
               </div>
             )}
-            <div className={`absolute bottom-4 left-4 font-mono text-[10px] z-10 ${isPhotoHovered ? 'glitch-active' : ''}`} style={{ color: theme.textMuted }}>
+            <div className={`absolute bottom-4 left-4 font-mono text-[10px] z-10 ${isChaosActive ? 'glitch-active' : ''}`} style={{ color: theme.textMuted }}>
               // Dimensional coordinate: 12.9716° N, 77.5946° E
             </div>
           </div>
           {/* Decorative corners */}
-          <div className={`absolute -top-4 -right-4 w-12 h-12 border-t-4 border-r-4 transition-all duration-300 ${isPhotoHovered ? 'scale-150 rotate-45' : ''}`} style={{ borderColor: theme.accent }}></div>
-          <div className={`absolute -bottom-4 -left-4 w-12 h-12 border-b-4 border-l-4 transition-all duration-300 ${isPhotoHovered ? 'scale-150 -rotate-45' : ''}`} style={{ borderColor: theme.accentSecondary }}></div>
+          <div className={`absolute -top-4 -right-4 w-12 h-12 border-t-4 border-r-4 transition-all duration-300 ${isChaosActive ? 'scale-150 rotate-45' : ''}`} style={{ borderColor: theme.accent }}></div>
+          <div className={`absolute -bottom-4 -left-4 w-12 h-12 border-b-4 border-l-4 transition-all duration-300 ${isChaosActive ? 'scale-150 -rotate-45' : ''}`} style={{ borderColor: theme.accentSecondary }}></div>
         </div>
       </section>
 
       {/* Skills Grid */}
-      <section className={`py-20 px-6 max-w-6xl mx-auto ${isPhotoHovered ? 'glitch-skew-active' : ''}`} style={{ borderTop: `1px solid ${theme.borderLight}` }}>
+      <section className={`py-20 px-6 max-w-6xl mx-auto ${isChaosActive ? 'glitch-skew-active' : ''}`} style={{ borderTop: `1px solid ${theme.borderLight}` }}>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {Object.entries(SKILLS).map(([cat, list], catIndex) => (
             <div key={cat} className="space-y-4">
-              <h4 className={`text-xs font-mono uppercase tracking-[0.3em] font-bold ${isPhotoHovered ? 'glitch-active' : ''}`} style={{ color: theme.accent }}>{cat}</h4>
+              <div className="space-y-1">
+                <h4 className={`text-xs font-mono uppercase tracking-[0.3em] font-bold ${isChaosActive ? 'glitch-active' : ''}`} style={{ color: theme.accent }}>{cat}</h4>
+                <p
+                  className={`text-[10px] font-mono italic transition-all duration-500 ${activeSkillCategory === catIndex ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-1'}`}
+                  style={{ color: theme.textMuted }}
+                >
+                  {SKILL_SUBTITLES[cat]}
+                </p>
+              </div>
               <div className="flex flex-wrap gap-x-6 gap-y-3">
                 {list.map((s, i) => (
                   <span
                     key={s}
-                    className={`text-lg font-bold cursor-default transition-colors ${isPhotoHovered ? 'float-chaos glitch-active' : ''}`}
+                    className={`text-lg font-bold cursor-default transition-colors ${isChaosActive ? 'float-chaos glitch-active' : ''}`}
                     style={{ color: theme.textSecondary, animationDelay: `${(catIndex * 100) + (i * 50)}ms` }}
                     onMouseEnter={(e) => e.currentTarget.style.color = theme.text}
                     onMouseLeave={(e) => e.currentTarget.style.color = theme.textSecondary}
@@ -473,13 +518,13 @@ const App: React.FC = () => {
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className={`py-20 px-6 max-w-6xl mx-auto ${isPhotoHovered ? 'glitch-skew-active' : ''}`}>
+      <section id="projects" className={`py-20 px-6 max-w-6xl mx-auto ${isChaosActive ? 'glitch-skew-active' : ''}`}>
         <div className="flex justify-between items-end mb-12">
           <div className="space-y-4">
-            <h2 className={`text-4xl font-black uppercase tracking-tighter ${isPhotoHovered ? 'glitch-active' : ''}`}>Selected Inventions</h2>
-            <p className={`font-mono text-xs max-w-md uppercase ${isPhotoHovered ? 'glitch-active' : ''}`} style={{ color: theme.textMuted }}>Things I built when curiosity peaked and the laws of physics allowed it.</p>
+            <h2 className={`text-4xl font-black uppercase tracking-tighter ${isChaosActive ? 'glitch-active' : ''}`}>Selected Inventions</h2>
+            <p className={`font-mono text-xs max-w-md uppercase ${isChaosActive ? 'glitch-active' : ''}`} style={{ color: theme.textMuted }}>Things I built when curiosity peaked and the laws of physics allowed it.</p>
           </div>
-          <div className={`hidden md:block h-[1px] flex-1 mx-8 mb-4 transition-colors duration-500`} style={{ backgroundColor: isPhotoHovered ? `${theme.accent}80` : theme.borderLight }}></div>
+          <div className={`hidden md:block h-[1px] flex-1 mx-8 mb-4 transition-colors duration-500`} style={{ backgroundColor: isChaosActive ? `${theme.accent}80` : theme.borderLight }}></div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {PROJECTS.map((p, i) => (
@@ -489,21 +534,21 @@ const App: React.FC = () => {
       </section>
 
       {/* Experience Section */}
-      <section id="experience" className={`py-20 px-6 max-w-6xl mx-auto ${isPhotoHovered ? 'glitch-skew-active' : ''}`} style={{ borderTop: `1px solid ${theme.borderLight}` }}>
-        <h2 className={`text-4xl font-black uppercase tracking-tighter mb-12 ${isPhotoHovered ? 'glitch-active' : ''}`}>Timeline</h2>
+      <section id="experience" className={`py-20 px-6 max-w-6xl mx-auto ${isChaosActive ? 'glitch-skew-active' : ''}`} style={{ borderTop: `1px solid ${theme.borderLight}` }}>
+        <h2 className={`text-4xl font-black uppercase tracking-tighter mb-12 ${isChaosActive ? 'glitch-active' : ''}`}>Timeline</h2>
         <div className="space-y-16">
           {EXPERIENCE.map((exp, i) => (
-            <div key={i} className={`flex flex-col md:flex-row gap-8 ${isPhotoHovered ? 'float-chaos' : ''}`} style={{ animationDelay: `${i * 100}ms` }}>
+            <div key={i} className={`flex flex-col md:flex-row gap-8 ${isChaosActive ? 'float-chaos' : ''}`} style={{ animationDelay: `${i * 100}ms` }}>
               <div className="md:w-1/3">
-                <div className={`font-mono text-sm mb-1 ${isPhotoHovered ? 'glitch-color-active' : ''}`} style={{ color: theme.accent }}>{exp.period}</div>
-                <h3 className={`text-2xl font-bold ${isPhotoHovered ? 'glitch-active' : ''}`}>{exp.company}</h3>
-                <div className={`text-sm font-mono uppercase ${isPhotoHovered ? 'glitch-active' : ''}`} style={{ color: theme.textMuted }}>{exp.role}</div>
+                <div className={`font-mono text-sm mb-1 ${isChaosActive ? 'glitch-color-active' : ''}`} style={{ color: theme.accent }}>{exp.period}</div>
+                <h3 className={`text-2xl font-bold ${isChaosActive ? 'glitch-active' : ''}`}>{exp.company}</h3>
+                <div className={`text-sm font-mono uppercase ${isChaosActive ? 'glitch-active' : ''}`} style={{ color: theme.textMuted }}>{exp.role}</div>
               </div>
               <div className="md:w-2/3 space-y-4">
                 <ul className="space-y-3">
                   {exp.points.map((p, j) => (
-                    <li key={j} className={`flex gap-4 leading-relaxed font-light ${isPhotoHovered ? 'glitch-active' : ''}`} style={{ color: theme.textSecondary }}>
-                      <span className={`mt-1.5 shrink-0 ${isPhotoHovered ? 'float-chaos' : ''}`} style={{ color: theme.accent }}><div className="w-1.5 h-1.5" style={{ backgroundColor: theme.accent }}></div></span>
+                    <li key={j} className={`flex gap-4 leading-relaxed font-light ${isChaosActive ? 'glitch-active' : ''}`} style={{ color: theme.textSecondary }}>
+                      <span className={`mt-1.5 shrink-0 ${isChaosActive ? 'float-chaos' : ''}`} style={{ color: theme.accent }}><div className="w-1.5 h-1.5" style={{ backgroundColor: theme.accent }}></div></span>
                       {p}
                     </li>
                   ))}
@@ -515,19 +560,19 @@ const App: React.FC = () => {
       </section>
 
       {/* Footer */}
-      <footer id="contact" className={`py-20 px-6 max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 ${isPhotoHovered ? 'glitch-skew-active' : ''}`} style={{ borderTop: `1px solid ${theme.borderLight}` }}>
+      <footer id="contact" className={`py-20 px-6 max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 ${isChaosActive ? 'glitch-skew-active' : ''}`} style={{ borderTop: `1px solid ${theme.borderLight}` }}>
         <div className="text-center md:text-left">
-          <h2 className={`text-4xl font-black uppercase tracking-tighter mb-2 ${isPhotoHovered ? 'glitch-active glitch-color-active' : ''}`}>
-            {isPhotoHovered ? '🔥 MAXIMUM OVERDRIVE! 🔥' : 'Wubba Lubba Dub Dub!'}
+          <h2 className={`text-4xl font-black uppercase tracking-tighter mb-2 ${isChaosActive ? 'glitch-active glitch-color-active' : ''}`}>
+            {isChaosActive ? '🔥 YOU FOUND AN EASTER EGG 🔥' : 'Wubba Lubba Dub Dub!'}
           </h2>
-          <p className={`font-mono text-xs uppercase ${isPhotoHovered ? 'glitch-active' : ''}`} style={{ color: theme.textMuted }}>
-            {isPhotoHovered ? 'CHAOS MODE ACTIVATED // ALL SYSTEMS NOMINAL' : 'No more distress, only code.'}
+          <p className={`font-mono text-xs uppercase ${isChaosActive ? 'glitch-active' : ''}`} style={{ color: theme.textMuted }}>
+            {isChaosActive ? 'CHAOS MODE ACTIVATED // ALL SYSTEMS NOMINAL' : 'No more distress, only code.'}
           </p>
         </div>
-        <div className={`flex gap-6 ${isPhotoHovered ? 'glitch-active' : ''}`}>
+        <div className={`flex gap-6 ${isChaosActive ? 'glitch-active' : ''}`}>
           <a
             href="mailto:rankawatrudraksh@gmail.com"
-            className={`p-4 rounded-full transition-colors ${isPhotoHovered ? 'float-chaos' : ''}`}
+            className={`p-4 rounded-full transition-colors ${isChaosActive ? 'float-chaos' : ''}`}
             style={{ backgroundColor: theme.bgSecondary, border: `1px solid ${theme.border}`, color: theme.text }}
             onMouseEnter={(e) => e.currentTarget.style.borderColor = theme.accent}
             onMouseLeave={(e) => e.currentTarget.style.borderColor = theme.border}
@@ -537,7 +582,7 @@ const App: React.FC = () => {
           <a
             href="https://github.com/rudraksh-rankawat"
             target="_blank"
-            className={`p-4 rounded-full transition-colors ${isPhotoHovered ? 'float-chaos' : ''}`}
+            className={`p-4 rounded-full transition-colors ${isChaosActive ? 'float-chaos' : ''}`}
             style={{ backgroundColor: theme.bgSecondary, border: `1px solid ${theme.border}`, color: theme.text, animationDelay: '100ms' }}
             onMouseEnter={(e) => e.currentTarget.style.borderColor = theme.accent}
             onMouseLeave={(e) => e.currentTarget.style.borderColor = theme.border}
@@ -547,7 +592,7 @@ const App: React.FC = () => {
           <a
             href="https://linkedin.com/in/rudraksh-rankawat"
             target="_blank"
-            className={`p-4 rounded-full transition-colors ${isPhotoHovered ? 'float-chaos' : ''}`}
+            className={`p-4 rounded-full transition-colors ${isChaosActive ? 'float-chaos' : ''}`}
             style={{ backgroundColor: theme.bgSecondary, border: `1px solid ${theme.border}`, color: theme.text, animationDelay: '200ms' }}
             onMouseEnter={(e) => e.currentTarget.style.borderColor = theme.accent}
             onMouseLeave={(e) => e.currentTarget.style.borderColor = theme.border}
@@ -557,7 +602,7 @@ const App: React.FC = () => {
           <a
             href="https://x.com/rankawwat"
             target="_blank"
-            className={`p-4 rounded-full transition-colors ${isPhotoHovered ? 'float-chaos' : ''}`}
+            className={`p-4 rounded-full transition-colors ${isChaosActive ? 'float-chaos' : ''}`}
             style={{ backgroundColor: theme.bgSecondary, border: `1px solid ${theme.border}`, color: theme.text, animationDelay: '300ms' }}
             onMouseEnter={(e) => e.currentTarget.style.borderColor = theme.accent}
             onMouseLeave={(e) => e.currentTarget.style.borderColor = theme.border}
@@ -567,8 +612,8 @@ const App: React.FC = () => {
         </div>
       </footer>
 
-      <div className={`fixed bottom-4 left-4 font-mono text-[8px] pointer-events-none select-none ${isPhotoHovered ? 'glitch-active' : ''}`} style={{ color: isPhotoHovered ? theme.accent : theme.textMuted }}>
-        {isPhotoHovered ? '⚡ CHAOS_DIMENSION // REALITY_UNSTABLE ⚡' : `C-137 // ${new Date().getFullYear()} // RUDRAKSH_PROTOCAL`}
+      <div className={`fixed bottom-4 left-4 font-mono text-[8px] pointer-events-none select-none ${isChaosActive ? 'glitch-active' : ''}`} style={{ color: isChaosActive ? theme.accent : theme.textMuted }}>
+        {isChaosActive ? '⚡ CHAOS_DIMENSION // REALITY_UNSTABLE ⚡' : `C-137 // ${new Date().getFullYear()} // RUDRAKSH_PROTOCAL`}
       </div>
 
       {/* Chaos overlay scanlines */}

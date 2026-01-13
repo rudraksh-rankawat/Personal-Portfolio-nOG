@@ -357,15 +357,15 @@
 }
 
 .fly-right {
-  animation: fly-right 1.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+  animation: fly-right 5s linear infinite;
 }
 
 .fly-left {
-  animation: fly-left 1.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+  animation: fly-left 5s linear infinite;
 }
 
 .fly-diagonal {
-  animation: fly-diagonal 2s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+  animation: fly-diagonal 6s linear infinite;
 }
 
 .screen-shake {
