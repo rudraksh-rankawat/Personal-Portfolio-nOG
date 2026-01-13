@@ -370,7 +370,7 @@ const App: React.FC = () => {
             </div>
           </div>
           <span className={`font-mono text-lg font-bold tracking-tighter uppercase ${isChaosActive ? 'glitch-color-active' : ''}`}>
-            {isChaosActive ? '!!CHAOS_MODE!!' : isThemePreview ? (showLight ? 'Light Mode' : '🌙 Dark Mode') : 'Rudraksh.dimension'}
+            {isChaosActive ? '!!CHAOS_MODE!!' : isThemePreview ? (showLight ? 'Light Mode' : '🌙 Dark Mode') : 'Be aware of Easter eggs'}
           </span>
         </div>
         <div className={`hidden md:flex gap-8 text-xs font-mono uppercase tracking-widest ${isChaosActive ? 'glitch-active' : ''}`}>
