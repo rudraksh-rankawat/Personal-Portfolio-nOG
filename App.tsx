@@ -447,8 +447,17 @@ const App: React.FC = () => {
           <div
             className={`w-full aspect-square border-4 relative overflow-hidden group cursor-pointer transition-all duration-300`}
             style={{ borderColor: isChaosActive ? theme.accent : theme.border }}
-            onMouseEnter={() => setIsPhotoHovered(true)}
-            onMouseLeave={() => setIsPhotoHovered(false)}
+            onMouseEnter={() => {
+              // Only enable hover on devices that support hover (not touch)
+              if (window.matchMedia('(hover: hover)').matches) {
+                setIsPhotoHovered(true);
+              }
+            }}
+            onMouseLeave={() => {
+              if (window.matchMedia('(hover: hover)').matches) {
+                setIsPhotoHovered(false);
+              }
+            }}
             onClick={() => setIsChaosLocked(!isChaosLocked)}
           >
             <img
