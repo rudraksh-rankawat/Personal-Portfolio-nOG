@@ -209,6 +209,19 @@ const App: React.FC = () => {
   const [isThemePreview, setIsThemePreview] = useState(false);
   const [flyingTexts, setFlyingTexts] = useState<Array<{ id: number; phrase: typeof FLYING_PHRASES[0]; direction: 'right' | 'left' | 'diagonal'; top: string; delay: number }>>([]);
   const [activeSkillCategory, setActiveSkillCategory] = useState(0);
+  const [nameColorSwapped, setNameColorSwapped] = useState(false);
+
+  // Scroll-based name color swap effect
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      // Swap colors after scrolling 150px
+      setNameColorSwapped(scrollY > 150);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Chaos mode is active if either hovered OR locked via click
   const isChaosActive = isPhotoHovered || isChaosLocked;
@@ -409,8 +422,20 @@ const App: React.FC = () => {
             </span>
           </div>
           <h1 className={`text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] ${isChaosActive ? 'glitch-active' : ''}`}>
-            RUDRAKSH <br />
-            <span className={isChaosActive ? 'glitch-color-active' : ''} style={{ color: theme.accentSecondary }}>RANKAWAT</span>
+            <span
+              className="transition-colors duration-700"
+              style={{
+                color: nameColorSwapped ? '#bfff00' : theme.text,
+                transitionTimingFunction: 'cubic-bezier(0.4, 0, 1, 1)' // ease-in (slow slow then fast)
+              }}
+            >RUDRAKSH</span> <br />
+            <span
+              className="transition-colors duration-700"
+              style={{
+                color: nameColorSwapped ? theme.text : '#bfff00',
+                transitionTimingFunction: 'cubic-bezier(0.4, 0, 1, 1)' // ease-in (slow slow then fast)
+              }}
+            >RANKAWAT</span>
           </h1>
           <p className={`text-xl max-w-xl font-light leading-relaxed ${isChaosActive ? 'glitch-active' : ''}`} style={{ color: theme.textSecondary }}>
             I'm a curious engineer operating across dimensions of Software Engineering, AI/ML, and Product Strategy. Currently studying at BITS Pilani and Scaler School of Technology.
